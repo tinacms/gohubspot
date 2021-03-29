@@ -73,3 +73,10 @@ func (s *ContactsService) GetByToken(token string) (*Contact, error) {
 	err := s.client.RunGet(url, res)
 	return res, err
 }
+
+func (s *ContactsService) GetByEmail(email string) (*Contact, error) {
+	url := fmt.Sprintf("/contacts/v1/contact/email/%s/profile", email)
+	res := new(Contact)
+	err := s.client.RunGet(url, res)
+	return res, err
+}
