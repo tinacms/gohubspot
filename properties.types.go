@@ -52,7 +52,7 @@ func (p *Properties) DeleteProperty(prop string) {
 		}
 	}
 
-	p.Properties = props
+	p.Properties = props.Properties
 }
 
 func (p *Properties) GetProperty(prop string) (Property, bool) {
