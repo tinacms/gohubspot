@@ -39,6 +39,32 @@ func (p *Properties) AddProperty(prop string, value interface{}) {
 	p.Properties = append(p.Properties, Property{Property: prop, Value: value})
 }
 
+func (p *Properties) UpdateProperty(prop string, value interface{}) {
+	p.DeleteProperty(prop)
+	p.AddProperty(prop, value)
+}
+
+func (p *Properties) DeleteProperty(prop string) {
+	props := &Properties{}
+	for i := range p.Properties {
+		if p.Properties[i].Property != prop {
+			props.AddProperty(p.Properties[i].Property, p.Properties[i].Value)
+		}
+	}
+
+	p.Properties = props
+}
+
+func (p *Properties) GetProperty(prop string) (Property, bool) {
+	for i := range p.Properties {
+		if p.Properties[i].Property == prop {
+			return p.Properties[i], true
+		}
+	}
+
+	return Property{}, false
+}
+
 // ItemPropertyOption definition
 type ItemPropertyOption struct {
 	Description  string      `json:"description"`
