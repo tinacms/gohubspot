@@ -1,5 +1,9 @@
 package gohubspot
 
+import (
+	"encoding/json"
+)
+
 type ItemDataType string
 
 type ItemFieldType string
@@ -32,6 +36,22 @@ type Property struct {
 
 type Properties struct {
 	Properties []Property `json:"properties"`
+}
+
+func (p *Properties) UnmarshalJSON(data []byte) error {
+	v := map[string]Property{}
+	err := json.Unmarshal(data, &v)
+	if err != nil {
+		return err
+	}
+
+	*p = Properties{}
+
+	for k, v := range v {
+		p.Properties = append(p.Properties, Property{Property: k, Value: v.Value, Versions: v.Versions})
+	}
+
+	return nil
 }
 
 // AddProperty addes a new property to list
